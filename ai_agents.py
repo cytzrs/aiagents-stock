@@ -24,6 +24,21 @@ class StockAnalysisAgents:
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
         }
     
+    def chan_analyst_agent(self, stock_info: Dict, stock_data: Any, indicators: Dict) -> Dict[str, Any]:
+        """缠论分析智能体"""
+        print("🔍 缠论分析师正在分析中...")
+        time.sleep(1)  # 模拟分析时间
+        
+        analysis = self.deepseek_client.chan_analysis(stock_info, stock_data, indicators)
+        
+        return {
+            "agent_name": "缠论分析师",
+            "agent_role": "负责缠论分析、走势形态识别、趋势判断",
+            "analysis": analysis,
+            "focus_areas": ["技术指标", "趋势分析", "支撑阻力", "交易信号"],
+            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
+        }
+    
     def fundamental_analyst_agent(self, stock_info: Dict, financial_data: Dict = None, quarterly_data: Dict = None) -> Dict[str, Any]:
         """基本面分析智能体"""
         print("📊 基本面分析师正在分析中...")
@@ -420,6 +435,7 @@ class StockAnalysisAgents:
         if enabled_analysts is None:
             enabled_analysts = {
                 'technical': True,
+                'chan': True,
                 'fundamental': True,
                 'fund_flow': True,
                 'risk': True,
@@ -441,6 +457,10 @@ class StockAnalysisAgents:
         # 技术面分析
         if enabled_analysts.get('technical', True):
             agents_results["technical"] = self.technical_analyst_agent(stock_info, stock_data, indicators)
+
+        # 缠论分析
+        if enabled_analysts.get('chan', True):
+            agents_results["chan"] = self.chan_analyst_agent(stock_info, stock_data, indicators)
         
         # 基本面分析
         if enabled_analysts.get('fundamental', True):
