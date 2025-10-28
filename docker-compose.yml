@@ -1,7 +1,7 @@
-version: '3.8'
 
 services:
   agentsstock:
+    image: aiagents-stock-agentsstock
     build:
       context: .
       dockerfile: Dockerfile

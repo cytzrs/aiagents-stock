@@ -465,6 +465,80 @@ class DeepSeekClient:
         
         return self.call_api(messages)
     
+    def cgyj_analysis(self, stock_info: Dict, stock_data: Any, indicators: Dict) -> str:
+        """养家心法分析"""
+        prompt = f"""
+你是一位深谙“炒股养家”心法的资深游资操盘手。你的核心哲学是：“心中有预期，操作看信号，永远站在情绪和资金的一边。” 
+请严格遵循心法要义，对指定股票进行短线交易分析，并制定一份可直接执行的交易计划。：
+
+股票信息：
+- 股票代码：{stock_info.get('symbol', 'N/A')}
+- 股票名称：{stock_info.get('name', 'N/A')}
+- 当前价格：{stock_info.get('current_price', 'N/A')}
+- 涨跌幅：{stock_info.get('change_percent', 'N/A')}%
+
+最新技术指标：
+- 收盘价：{indicators.get('price', 'N/A')}
+- MA5：{indicators.get('ma5', 'N/A')}
+- MA10：{indicators.get('ma10', 'N/A')}
+- MA20：{indicators.get('ma20', 'N/A')}
+- MA60：{indicators.get('ma60', 'N/A')}
+- RSI：{indicators.get('rsi', 'N/A')}
+- MACD：{indicators.get('macd', 'N/A')}
+- MACD信号线：{indicators.get('macd_signal', 'N/A')}
+- 布林带上轨：{indicators.get('bb_upper', 'N/A')}
+- 布林带下轨：{indicators.get('bb_lower', 'N/A')}
+- K值：{indicators.get('k_value', 'N/A')}
+- D值：{indicators.get('d_value', 'N/A')}
+- 量比：{indicators.get('volume_ratio', 'N/A')}
+
+请从以下角度进行分析：
+1. 势——审视市场环境与题材逻辑
+    1. 市场情绪周期定位
+    判断当前市场处于 "启动—发酵—高潮—退潮—冰点" 中的哪个阶段？
+    市场的赚钱效应和亏钱效应分别集中在哪些板块？
+    当前市场的最高连板数和涨停家数反映了怎样的风险偏好？
+    2. 个股题材强度分析
+    该股的核心题材是什么？（例如：新技术、新政策、重大事件）
+    该题材的 "新、大、热" 程度如何？是主线题材，还是支线/过渡性题材？
+    评估题材的预期寿命和想象空间。
+2. 道——剖析资金动向与筹码结构
+    1. 资金攻击意图
+    近期是否有 "点火"（直线拉升）、"封板"、"炸板回封" 等关键资金行为？
+    分析量价关系：是缩量加速？放量分歧？还是无量阴跌？
+    2. 筹码博弈状态
+    当前股价处于何种位置？（低位启动、中位换手、高位震荡、下跌通道）
+    关键压力位（前高、密集套牢区）和支撑位（前低、启动平台）在哪里？
+3. 术——制定买卖策略与风控计划
+    1. 买入策略（"心中的预期"）
+    "确定性"买点：在何种信号出现时，代表确定性最高？ 示例： "带量高开并快速拉红，确认弱转强"、"爆量分歧后，首次回封涨停时"
+    "风报比"买点：在何种情况下，可以小仓位博弈高风报比？ 示例： "回调至关键支撑位且分时图出现资金承接"
+    2. 卖出策略（"操作看信号"）
+    主动止盈点：达到何种条件即可锁定利润？ 示例： "封单急剧减少且板块出现大面股时，分批卖出"
+    无条件止损点：出现何种信号必须果断离场？ 示例： "买入后次日低开低走，跌破昨日最低点"
+    3. 仓位管理
+    根据本次交易的 "确定性等级"（高、中、低），给出具体的仓位建议 示例： "3成仓试错、5成仓主攻、1成仓娱乐"
+4. 律——明确交易纪律与推演
+    1. 交易纪律重申
+    必须无条件执行的1-2条核心纪律 示例： "宁可错过，不可做错"、"止损单必须开盘前挂好"
+    2. 完全分类与应对
+    对次日走势进行 "强、中、弱" 三种完全分类：
+
+    走势分类	应对策略
+    超预期（强）	如何持有或加仓？
+    符合预期（中）	如何观察和持有？
+    低于预期（弱）	如何果断卖出或减仓？
+
+请给出专业、详细的技术分析报告，包含风险提示。
+"""
+        
+        messages = [
+            {"role": "system", "content": "基于养家心法哲学，生成包含明确买卖点和风控措施的短期交易计划。"},
+            {"role": "user", "content": prompt}
+        ]
+        
+        return self.call_api(messages)
+    
     def final_decision(self, comprehensive_discussion: str, stock_info: Dict, 
                       indicators: Dict) -> Dict[str, Any]:
         """最终投资决策"""

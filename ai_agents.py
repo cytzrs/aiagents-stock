@@ -39,6 +39,21 @@ class StockAnalysisAgents:
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
         }
     
+    def cgyj_analyst_agent(self, stock_info: Dict, stock_data: Any, indicators: Dict) -> Dict[str, Any]:
+        """养家心法智能体"""
+        print("🔍 养家心法分析师正在分析中...")
+        time.sleep(1)  # 模拟分析时间
+        
+        analysis = self.deepseek_client.cgyj_analysis(stock_info, stock_data, indicators)
+        
+        return {
+            "agent_name": "养家心法分析师",
+            "agent_role": "负责养家心法分析、走势形态识别、趋势判断",
+            "analysis": analysis,
+            "focus_areas": ["技术指标", "趋势分析", "支撑阻力", "交易信号"],
+            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
+        }
+    
     def fundamental_analyst_agent(self, stock_info: Dict, financial_data: Dict = None, quarterly_data: Dict = None) -> Dict[str, Any]:
         """基本面分析智能体"""
         print("📊 基本面分析师正在分析中...")
@@ -461,6 +476,10 @@ class StockAnalysisAgents:
         # 缠论分析
         if enabled_analysts.get('chan', True):
             agents_results["chan"] = self.chan_analyst_agent(stock_info, stock_data, indicators)
+
+        # 养家心法
+        if enabled_analysts.get('cgyj', True):
+            agents_results["cgyj"] = self.cgyj_analyst_agent(stock_info, stock_data, indicators)
         
         # 基本面分析
         if enabled_analysts.get('fundamental', True):

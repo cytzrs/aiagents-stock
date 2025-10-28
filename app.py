@@ -564,7 +564,9 @@ def main():
         enable_fundamental = st.checkbox("💼 基本面分析师", value=True,
                                         help="负责公司财务分析、行业研究、估值分析")
         enable_chan = st.checkbox("📊 缠论分析师", value=True, 
-                                       help="负责缠论形态识别、趋势判断")
+                                       help="负责形态识别、趋势判断")
+        enable_cgyj = st.checkbox("📊 养家心法决策", value=True, 
+                                       help="负责买卖点决策,多空判断")
     
     with col2:
         enable_fund_flow = st.checkbox("💰 资金面分析师", value=True,
@@ -584,6 +586,8 @@ def main():
         selected_analysts.append("技术分析师")
     if enable_chan:
         selected_analysts.append("缠论分析师")
+    if enable_cgyj:
+        selected_analysts.append("养家心法决策")
     if enable_fundamental:
         selected_analysts.append("基本面分析师")
     if enable_fund_flow:
@@ -608,6 +612,7 @@ def main():
     st.session_state.enable_sentiment = enable_sentiment
     st.session_state.enable_news = enable_news
     st.session_state.enable_chan = enable_chan
+    st.session_state.enable_cgyj = enable_cgyj
     
     st.markdown("---")
     
@@ -936,7 +941,8 @@ def run_batch_analysis(stock_list, period, batch_mode="顺序分析"):
         'fund_flow': st.session_state.get('enable_fund_flow', True),
         'risk': st.session_state.get('enable_risk', True),
         'sentiment': st.session_state.get('enable_sentiment', False),
-        'news': st.session_state.get('enable_news', False)
+        'news': st.session_state.get('enable_news', False),
+        'cgyj': st.session_state.get('enable_cgyj', False)
     }
     selected_model = st.session_state.get('selected_model', 'deepseek-chat')
     
@@ -1220,11 +1226,13 @@ def run_stock_analysis(symbol, period):
         enable_fundamental = st.session_state.get('enable_fundamental', True)
         enable_risk = st.session_state.get('enable_risk', True)
         enable_chan = st.session_state.get('enable_chan', True)
+        enable_cgyj = st.session_state.get('enable_cgyj', True)
         
         # 创建分析师启用字典
         enabled_analysts = {
             'technical': enable_technical,
             'chan': enable_chan,
+            'cgyj': enable_cgyj,
             'fundamental': enable_fundamental,
             'fund_flow': enable_fund_flow,
             'risk': enable_risk,
