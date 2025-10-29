@@ -7,7 +7,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-from main_force_batch_db import batch_db
+from lht_batch_db import batch_db
 
 
 def display_batch_history():
@@ -17,7 +17,7 @@ def display_batch_history():
     col_back, col_stats = st.columns([1, 4])
     with col_back:
         if st.button("← 返回主页"):
-            st.session_state.main_force_view_history = False
+            st.session_state.lht_view_history = False
             st.rerun()
     
     st.markdown("## 📚 主力选股批量分析历史记录")
@@ -162,7 +162,7 @@ def display_batch_history():
                 with col_reload:
                     if st.button(f"🔄 加载到当前结果", key=f"reload_{record['id']}"):
                         # 将历史记录加载到session_state
-                        st.session_state.main_force_batch_results = {
+                        st.session_state.lht_batch_results = {
                             "results": record['results'],
                             "total": record['batch_count'],
                             "success": record['success_count'],
@@ -170,7 +170,7 @@ def display_batch_history():
                             "elapsed_time": record['total_time'],
                             "analysis_mode": record['analysis_mode']
                         }
-                        st.session_state.main_force_view_history = False
+                        st.session_state.lht_view_history = False
                         st.success("✅ 已加载到当前结果，返回主页查看")
                         st.rerun()
     

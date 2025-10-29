@@ -25,8 +25,9 @@ class LhtAnalyzer:
         self.deepseek_client = self.agents.deepseek_client
         self.raw_stocks = None
         self.final_recommendations = []
+        self.rate = "-15%"
     
-    def run_full_analysis(self, start_date: str = None, days_ago: int = 90, 
+    def run_full_analysis(self, start_date, rate: str = None, days_ago: int = 90,
                          final_n: int = 5) -> Dict:
         """
         运行完整的龙回头选股分析流程 - 整体批量分析
@@ -55,7 +56,8 @@ class LhtAnalyzer:
             # 步骤1: 获取主力资金净流入前100名股票
             success, raw_data, message = self.selector.get_lht_stocks(
                 start_date=start_date,
-                days_ago=days_ago
+                days_ago=days_ago,
+                rate=rate
             )
             
             if not success:

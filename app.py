@@ -303,7 +303,7 @@ def main():
         st.markdown("---")
         
         # 🎯 选股板块
-        with st.expander("🎯 选股板块", expanded=True):
+        with st.expander("🎯 选股板块", expanded=False):
             st.markdown("**根据不同策略筛选优质股票**")
             
             if st.button("💰 主力选股", width='stretch', key="nav_main_force", help="基于主力资金流向的选股策略"):
@@ -321,7 +321,7 @@ def main():
                         del st.session_state[key]
         
         # 📊 策略分析
-        with st.expander("📊 策略分析", expanded=True):
+        with st.expander("📊 策略分析", expanded=False):
             st.markdown("**AI驱动的板块和龙虎榜策略**")
             
             if st.button("🎯 智策板块", width='stretch', key="nav_sector_strategy", help="AI板块策略分析"):
@@ -339,7 +339,7 @@ def main():
                         del st.session_state[key]
         
         # 💼 投资管理
-        with st.expander("💼 投资管理", expanded=True):
+        with st.expander("💼 投资管理", expanded=False):
             st.markdown("**持仓跟踪与实时监测**")
             
             if st.button("📊 持仓分析", width='stretch', key="nav_portfolio", help="投资组合分析与定时跟踪"):

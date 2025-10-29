@@ -18,9 +18,9 @@ class LhtStockSelector:
         self.raw_data = None
         self.filtered_stocks = None
     
-    def get_lht_stocks(self, start_date: str = None, days_ago: int = 90) -> Tuple[bool, pd.DataFrame, str]:
+    def get_lht_stocks(self, start_date, rate: str = None, days_ago: int = 90) -> Tuple[bool, pd.DataFrame, str]:
         """
-        近20天有三次以上涨停，从最高收盘价回调20%以上
+        {start_date}以来三次以上涨停，从最高收盘价回调20%以上
         
         Args:
             start_date: 开始日期，格式如"2025年10月1日"，如果不提供则使用days_ago
@@ -39,30 +39,24 @@ class LhtStockSelector:
             print(f"🔍 龙回头选股 - 数据获取中")
             print(f"{'='*60}")
             print(f"开始日期: {start_date}")
-            print(f"目标: 获取近20天有三次以上涨停，从最高收盘价回调20%以上的股票")
+            print(f"目标: 获取{start_date}以来三次以上涨停，从最高收盘价回调20%以上的股票")
             
             # 构建查询语句 - 使用多个备选方案，所有方案都要求计算区间涨跌幅
             queries = [
                 # 方案1: 完整查询（最优）
-                f"{start_date}以来主力资金净流入排名，并计算区间涨跌幅，市值50-5000亿之间，非科创非st，"
+                f"{start_date}以来三次以上涨停，最近3个交易日回撤超过{rate}，市值50-500亿之间，非科创非st，"
                 f"所属同花顺行业，总市值，净利润，营收，市盈率，市净率，"
                 f"盈利能力评分，成长能力评分，营运能力评分，偿债能力评分，"
                 f"现金流评分，资产质量评分，流动性评分，资本充足性评分",
-                f"15日内三次以上涨停，最近3个交易日回撤超过15%",
                 
                 # 方案2: 简化查询
-                f"{start_date}以来主力资金净流入，并计算区间涨跌幅，市值50-5000亿，非科创非st，"
+                f"{start_date}以来三次以上涨停，最近3个交易日回撤超过{rate}，市值50-500亿，非科创非st，"
                 f"所属同花顺行业，总市值，净利润，营收，市盈率，市净率",
-                f"15日内三次以上涨停，最近3个交易日回撤超过15%",
                 
                 # 方案3: 基础查询
-                f"{start_date}以来主力资金净流入排名，并计算区间涨跌幅，市值50-5000亿，非科创非st，"
+                f"{start_date}以来三次以上涨停，最近3个交易日回撤超过{rate}，市值50-500亿，非科创非st，"
                 f"所属行业，总市值",
-                f"15日内三次以上涨停，最近3个交易日回撤超过15%",
-                
-                # 方案4: 最简查询
-                f"{start_date}以来主力资金净流入前100名，并计算区间涨跌幅，市值50-5000亿，非st非科创板，所属行业，总市值",
-                f"15日内三次以上涨停，最近3个交易日回撤超过15%",
+
             ]
             
             # 尝试不同的查询方案

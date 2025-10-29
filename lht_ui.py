@@ -65,6 +65,7 @@ def display_lht_selector():
             ["最近1个月", "最近3个月", "最近6个月", "最近1年", "自定义日期"]
         )
 
+
         if date_option == "最近1个月":
             days_ago = 30
             start_date = None
@@ -103,31 +104,10 @@ def display_lht_selector():
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            max_change = st.number_input(
-                "最大涨跌幅(%)",
-                min_value=10.0,
-                max_value=100.0,
-                value=30.0,
-                step=5.0,
-                help="过滤掉涨幅过高的股票，避免追高"
-            )
-        
-        with col2:
-            min_cap = st.number_input(
-                "最小市值(亿)",
-                min_value=10.0,
-                max_value=500.0,
-                value=50.0,
-                step=10.0
-            )
-        
-        with col3:
-            max_cap = st.number_input(
-                "最大市值(亿)",
-                min_value=100.0,
-                max_value=50000.0,
-                value=5000.0,
-                step=100.0
+           rate = st.text_input(
+                "回撤率",
+                value="-15%",
+                help="最近3个交易日回撤超过此率，默认-15%"
             )
     
     # 模型选择
@@ -151,6 +131,7 @@ def display_lht_selector():
             result = analyzer.run_full_analysis(
                 start_date=start_date,
                 days_ago=days_ago,
+                rate=rate,
                 final_n=final_n
             )
             
@@ -166,8 +147,8 @@ def display_lht_selector():
             st.error(f"❌ 分析失败: {result.get('error', '未知错误')}")
     
     # 显示分析结果
-    if 'main_force_result' in st.session_state:
-        result = st.session_state.main_force_result
+    if 'lht_result' in st.session_state:
+        result = st.session_state.lht_result
         
         if result['success']:
             display_analysis_results(result, st.session_state.get('lht_analyzer'))

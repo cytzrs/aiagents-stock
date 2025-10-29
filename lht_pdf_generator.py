@@ -5,7 +5,7 @@ from datetime import datetime
 import streamlit as st
 import pandas as pd
 
-def generate_main_force_markdown_report(analyzer, result):
+def generate_lht_markdown_report(analyzer, result):
     """生成主力选股Markdown格式的分析报告"""
     
     # 获取当前时间
@@ -389,7 +389,7 @@ def display_report_download_section(analyzer, result):
         st.caption("适合编辑和进一步处理")
         
         # 生成Markdown报告
-        markdown_content = generate_main_force_markdown_report(analyzer, result)
+        markdown_content = generate_lht_markdown_report(analyzer, result)
         
         # 生成文件名
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

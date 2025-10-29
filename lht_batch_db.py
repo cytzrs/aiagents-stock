@@ -10,7 +10,7 @@ from datetime import datetime
 from typing import List, Dict, Optional, Tuple
 import pandas as pd
 
-class MainForceBatchDatabase:
+class LhtBatchDatabase:
     """主力选股批量分析历史数据库管理类"""
     
     def __init__(self, db_path: str = "lht_batch.db"):
@@ -297,5 +297,5 @@ class MainForceBatchDatabase:
 
 
 # 全局数据库实例
-batch_db = MainForceBatchDatabase()
+batch_db = LhtBatchDatabase()
 
