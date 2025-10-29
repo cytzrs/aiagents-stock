@@ -59,8 +59,8 @@ def main():
     try:
         subprocess.run([
             sys.executable, "-m", "streamlit", "run", "app.py",
-            "--server.port", "8503",
-            "--server.address", "127.0.0.1"
+            "--server.port", "8501",
+            "--server.address", "0.0.0.0"
         ])
     except KeyboardInterrupt:
         print("\n👋 感谢使用AI股票分析系统！")
