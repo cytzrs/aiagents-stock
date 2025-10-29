@@ -20,7 +20,7 @@ class LhtStockSelector:
     
     def get_lht_stocks(self, start_date, rate: str = None, days_ago: int = 90) -> Tuple[bool, pd.DataFrame, str]:
         """
-        {start_date}以来三次以上涨停，从最高收盘价回调20%以上
+        {start_date}以来三次以上涨停，从最高收盘价回调{rate}以上
         
         Args:
             start_date: 开始日期，格式如"2025年10月1日"，如果不提供则使用days_ago
