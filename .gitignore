@@ -10,4 +10,7 @@
 /.cursor
 /openspec
 TradEnv/
-/data
+/data/*
+
+*.db
+**/*.db

@@ -415,7 +415,7 @@ def display_scoring_ranking(result):
     with col_batch2:
         batch_count = st.selectbox(
             "分析数量",
-            options=[3, 5, 10],
+            options=[3, 5, 10, 15, 20, 30, 50],
             index=0,
             help="选择分析前N只股票",
             key="batch_count_selector"

@@ -31,7 +31,7 @@ def display_lht_selector():
     with col_history:
         st.write("")  # 占位
         if st.button("📚 批量分析历史", use_container_width=True):
-            st.session_state.main_force_view_history = True
+            st.session_state.lht_view_history = True
             st.rerun()
     
     st.markdown("---")
@@ -136,8 +136,8 @@ def display_lht_selector():
             )
             
             # 保存结果到session_state
-            st.session_state.main_force_result = result
-            st.session_state.main_force_analyzer = analyzer
+            st.session_state.lht_result = result
+            st.session_state.lht_analyzer = analyzer
         
         # 显示结果
         if result['success']:
@@ -271,7 +271,7 @@ def display_analysis_results(result: dict, analyzer):
         st.download_button(
             label="📥 下载候选列表CSV",
             data=csv,
-            file_name=f"main_force_stocks_{datetime.now().strftime('%Y%m%d')}.csv",
+            file_name=f"lht_stocks_{datetime.now().strftime('%Y%m%d')}.csv",
             mime="text/csv"
         )
         
@@ -315,8 +315,8 @@ def display_analysis_results(result: dict, analyzer):
                         stock_codes.append(str(code))
                 
                 # 存储到session_state，触发批量分析
-                st.session_state.main_force_batch_codes = stock_codes
-                st.session_state.main_force_batch_trigger = True
+                st.session_state.lht_batch_codes = stock_codes
+                st.session_state.lht_batch_trigger = True
                 st.rerun()
     
     # 显示PDF报告下载区域
@@ -700,7 +700,7 @@ def run_lht_batch_analysis():
         save_success = False
         save_error = None
         try:
-            from main_force_batch_db import batch_db
+            from lht_batch_db import batch_db
             
             # 调试信息
             print(f"\n{'='*60}")

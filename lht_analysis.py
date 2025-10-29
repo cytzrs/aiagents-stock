@@ -88,19 +88,6 @@ class LhtAnalyzer:
             print(f"🤖 AI分析师团队开始整体分析...")
             print(f"{'='*80}\n")
             
-            # 准备整体数据摘要
-            overall_summary = self._prepare_overall_summary(filtered_data)
-            
-            # 三大分析师整体分析
-            fund_flow_analysis = self._fund_flow_overall_analysis(filtered_data, overall_summary)
-            industry_analysis = self._industry_overall_analysis(filtered_data, overall_summary)
-            fundamental_analysis = self._fundamental_overall_analysis(filtered_data, overall_summary)
-            
-            # 保存分析报告到对象属性，供UI展示
-            self.fund_flow_analysis = fund_flow_analysis
-            self.industry_analysis = industry_analysis
-            self.fundamental_analysis = fundamental_analysis
-            
             # 步骤4: 综合决策，精选优质标的
             print(f"\n{'='*80}")
             print(f"👔 资深研究员综合评估并精选标的...")
@@ -108,9 +95,6 @@ class LhtAnalyzer:
             
             final_recommendations = self._select_best_stocks(
                 filtered_data,
-                fund_flow_analysis,
-                industry_analysis,
-                fundamental_analysis,
                 final_n=final_n
             )
             
@@ -281,6 +265,8 @@ class LhtAnalyzer:
         
         # 准备数据表格
         data_table = self._prepare_data_table(df, focus='fundamental')
+
+        # return data_table
         
         prompt = f"""
 你是一名资深的基本面分析师，现在需要你从财务质量和基本面角度分析这批股票。
@@ -385,9 +371,6 @@ class LhtAnalyzer:
         return table_str
     
     def _select_best_stocks(self, df: pd.DataFrame, 
-                           fund_analysis: str, 
-                           industry_analysis: str,
-                           fundamental_analysis: str,
                            final_n: int = 5) -> List[Dict]:
         """综合三位分析师的意见，精选最优标的"""
         
@@ -401,15 +384,6 @@ class LhtAnalyzer:
 【候选股票数据】
 {data_table}
 
-【资金流向分析师观点】
-{fund_analysis}
-
-【行业板块分析师观点】
-{industry_analysis}
-
-【财务基本面分析师观点】
-{fundamental_analysis}
-
 【筛选标准】
 1. **主力资金**: 主力资金净流入较多，显示机构看好
 2. **涨幅适中**: 区间涨跌幅不是很高（避免追高），还有上涨空间
@@ -417,8 +391,7 @@ class LhtAnalyzer:
 4. **基本面良好**: 财务指标健康，盈利能力强
 5. **综合平衡**: 资金、行业、基本面三方面都不错
 
-【任务要求】
-综合三位分析师的观点，精选出{final_n}只最优标的。
+【精选出{final_n}只最优标的。
 
 对于每只精选股票，请提供：
 1. **股票代码和名称**
@@ -454,7 +427,6 @@ class LhtAnalyzer:
 - 必须严格按照JSON格式输出
 - 推荐数量为{final_n}只
 - 按投资价值从高到低排序
-- 理由要具体、有说服力，体现三位分析师的综合观点
 """
         
         try:
@@ -493,35 +465,7 @@ class LhtAnalyzer:
             
         except Exception as e:
             print(f"  ❌ JSON解析失败，使用备选方案: {e}")
-            
-            # 降级方案：按主力资金排序返回前N个
-            main_fund_cols = [col for col in df.columns if '主力' in col and '净流入' in col]
-            if main_fund_cols:
-                col_name = main_fund_cols[0]
-                df[col_name] = pd.to_numeric(df[col_name], errors='coerce')
-                sorted_df = df.nlargest(final_n, col_name)
-            else:
-                sorted_df = df.head(final_n)
-            
-            recommendations = []
-            for i, (idx, row) in enumerate(sorted_df.iterrows(), 1):
-                recommendations.append({
-                    'rank': i,
-                    'symbol': row.get('股票代码', 'N/A'),
-                    'name': row.get('股票简称', 'N/A'),
-                    'reasons': [
-                        f"主力资金净流入较多",
-                        f"所属行业: {row.get('所属同花顺行业', 'N/A')}",
-                        f"涨跌幅适中"
-                    ],
-                    'highlights': '主力资金持续关注',
-                    'risks': '需关注后续走势',
-                    'position': '15-25%',
-                    'investment_period': '中短期',
-                    'stock_data': row.to_dict()
-                })
-            
-            return recommendations
+            return []
     
     def _print_final_recommendations(self, recommendations: List[Dict]):
         """打印最终推荐结果"""

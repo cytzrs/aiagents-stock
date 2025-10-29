@@ -39,7 +39,7 @@ class LhtStockSelector:
             print(f"🔍 龙回头选股 - 数据获取中")
             print(f"{'='*60}")
             print(f"开始日期: {start_date}")
-            print(f"目标: 获取{start_date}以来三次以上涨停，从最高收盘价回调20%以上的股票")
+            print(f"目标: 获取{start_date}以来三次以上涨停，从最高收盘价回调{rate}以上的股票")
             
             # 构建查询语句 - 使用多个备选方案，所有方案都要求计算区间涨跌幅
             queries = [
@@ -84,9 +84,9 @@ class LhtStockSelector:
                     
                     # 显示获取到的列名
                     print(f"\n获取到的数据字段:")
-                    for col in df_result.columns[:15]:  # 只显示前15个字段
+                    for col in df_result.columns[:14]:  # 只显示前15个字段
                         print(f"  - {col}")
-                    if len(df_result.columns) > 15:
+                    if len(df_result.columns) > 14:
                         print(f"  ... 还有 {len(df_result.columns) - 15} 个字段")
                     
                     return True, df_result, f"成功获取{len(df_result)}只股票数据"

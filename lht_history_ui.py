@@ -115,7 +115,7 @@ def display_batch_history():
                         })
                     
                     df = pd.DataFrame(table_data)
-                    st.dataframe(df, use_container_width=True)
+                    st.dataframe(df, width="stretch")
                     
                     # 显示详细分析（可展开）
                     with st.expander("📊 查看详细分析报告"):
@@ -147,7 +147,7 @@ def display_batch_history():
                         })
                     
                     df_fail = pd.DataFrame(fail_data)
-                    st.dataframe(df_fail, use_container_width=True)
+                    st.dataframe(df_fail, width="stretch")
                 
                 # 操作按钮
                 col_del, col_reload = st.columns([1, 1])
