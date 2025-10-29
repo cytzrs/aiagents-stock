@@ -1145,7 +1145,7 @@ def run_longhubang_batch_analysis():
                             'sentiment': False,
                             'news': False
                         },
-                        selected_model='deepseek-chat'
+                        selected_model='deepseek-reasoner'
                     )
                     
                     results.append({
@@ -1176,7 +1176,7 @@ def run_longhubang_batch_analysis():
                             'sentiment': False,
                             'news': False
                         },
-                        selected_model='deepseek-chat'
+                        selected_model='deepseek-reasoner'
                     )
                     return {"code": code, "result": result}
                 except Exception as e:

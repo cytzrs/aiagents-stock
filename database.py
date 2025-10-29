@@ -6,7 +6,7 @@ import os
 class StockAnalysisDatabase:
     def __init__(self, db_path="stock_analysis.db"):
         """初始化数据库连接"""
-        self.db_path = db_path
+        self.db_path ="./data/" +  db_path
         # 确保数据库所在目录存在
         db_dir = os.path.dirname(self.db_path)
         if db_dir and not os.path.exists(db_dir):

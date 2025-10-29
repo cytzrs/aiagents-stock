@@ -15,7 +15,7 @@ class MainForceBatchDatabase:
     
     def __init__(self, db_path: str = "main_force_batch.db"):
         """初始化数据库连接"""
-        self.db_path = db_path
+        self.db_path ="./data/" +  db_path
         self._init_database()
     
     def _init_database(self):

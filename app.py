@@ -17,6 +17,7 @@ from monitor_service import monitor_service
 from notification_service import notification_service
 from config_manager import config_manager
 from main_force_ui import display_main_force_selector
+from lht_ui import display_lht_selector
 from sector_strategy_ui import display_sector_strategy
 from longhubang_ui import display_longhubang
 from smart_monitor_ui import smart_monitor_ui
@@ -294,7 +295,7 @@ def main():
         # 🏠 单股分析（首页）
         if st.button("🏠 股票分析", width='stretch', key="nav_home", help="返回首页，进行单只股票的深度分析"):
             # 清除所有功能页面标志
-            for key in ['show_history', 'show_monitor', 'show_config', 'show_main_force', 
+            for key in ['show_history', 'show_monitor', 'show_config', 'show_main_force', 'show_lht', 
                        'show_sector_strategy', 'show_longhubang', 'show_portfolio']:
                 if key in st.session_state:
                     del st.session_state[key]
@@ -311,6 +312,13 @@ def main():
                            'show_longhubang', 'show_portfolio']:
                     if key in st.session_state:
                         del st.session_state[key]
+
+            if st.button("💰 龙回头", width='stretch', key="nav_lht", help="基于热门股回调的选股策略"):
+                st.session_state.show_lht = True
+                for key in ['show_history', 'show_monitor', 'show_config', 'show_sector_strategy', 
+                           'show_longhubang', 'show_portfolio']:
+                    if key in st.session_state:
+                        del st.session_state[key]
         
         # 📊 策略分析
         with st.expander("📊 策略分析", expanded=False):
@@ -318,14 +326,14 @@ def main():
             
             if st.button("🎯 智策板块", width='stretch', key="nav_sector_strategy", help="AI板块策略分析"):
                 st.session_state.show_sector_strategy = True
-                for key in ['show_history', 'show_monitor', 'show_config', 'show_main_force', 
+                for key in ['show_history', 'show_monitor', 'show_config', 'show_main_force', 'show_lht',  
                            'show_longhubang', 'show_portfolio', 'show_smart_monitor']:
                     if key in st.session_state:
                         del st.session_state[key]
             
             if st.button("🐉 智瞰龙虎", width='stretch', key="nav_longhubang", help="龙虎榜深度分析"):
                 st.session_state.show_longhubang = True
-                for key in ['show_history', 'show_monitor', 'show_config', 'show_main_force', 
+                for key in ['show_history', 'show_monitor', 'show_config', 'show_main_force', 'show_lht', 
                            'show_sector_strategy', 'show_portfolio', 'show_smart_monitor']:
                     if key in st.session_state:
                         del st.session_state[key]
@@ -336,21 +344,21 @@ def main():
             
             if st.button("📊 持仓分析", width='stretch', key="nav_portfolio", help="投资组合分析与定时跟踪"):
                 st.session_state.show_portfolio = True
-                for key in ['show_history', 'show_monitor', 'show_config', 'show_main_force', 
+                for key in ['show_history', 'show_monitor', 'show_config', 'show_main_force', 'show_lht',  
                            'show_sector_strategy', 'show_longhubang', 'show_smart_monitor']:
                     if key in st.session_state:
                         del st.session_state[key]
             
             if st.button("🤖 AI盯盘", width='stretch', key="nav_smart_monitor", help="DeepSeek AI自动盯盘决策交易（支持A股T+1）"):
                 st.session_state.show_smart_monitor = True
-                for key in ['show_history', 'show_monitor', 'show_config', 'show_main_force', 
+                for key in ['show_history', 'show_monitor', 'show_config', 'show_main_force', 'show_lht',  
                            'show_sector_strategy', 'show_longhubang', 'show_portfolio']:
                     if key in st.session_state:
                         del st.session_state[key]
             
             if st.button("📡 实时监测", width='stretch', key="nav_monitor", help="价格监控与预警提醒"):
                 st.session_state.show_monitor = True
-                for key in ['show_history', 'show_main_force', 'show_longhubang', 'show_portfolio',
+                for key in ['show_history', 'show_main_force', 'show_lht',  'show_longhubang', 'show_portfolio',
                            'show_config', 'show_sector_strategy', 'show_smart_monitor']:
                     if key in st.session_state:
                         del st.session_state[key]
@@ -361,14 +369,14 @@ def main():
         if st.button("📖 历史记录", width='stretch', key="nav_history", help="查看历史分析记录"):
             st.session_state.show_history = True
             for key in ['show_monitor', 'show_longhubang', 'show_portfolio', 'show_config',
-                       'show_main_force', 'show_sector_strategy']:
+                       'show_main_force', 'show_lht',  'show_sector_strategy']:
                 if key in st.session_state:
                     del st.session_state[key]
         
         # ⚙️ 环境配置
         if st.button("⚙️ 环境配置", width='stretch', key="nav_config", help="系统设置与API配置"):
             st.session_state.show_config = True
-            for key in ['show_history', 'show_monitor', 'show_main_force', 'show_sector_strategy', 
+            for key in ['show_history', 'show_monitor', 'show_main_force', 'show_lht',  'show_sector_strategy', 
                        'show_longhubang', 'show_portfolio']:
                 if key in st.session_state:
                     del st.session_state[key]
@@ -460,6 +468,11 @@ def main():
     # 检查是否显示主力选股
     if 'show_main_force' in st.session_state and st.session_state.show_main_force:
         display_main_force_selector()
+        return
+    
+    # 检查是否显示龙回头选股
+    if 'show_lht' in st.session_state and st.session_state.show_lht:
+        display_lht_selector()
         return
     
     # 检查是否显示智策板块
@@ -784,7 +797,7 @@ def parse_stock_list(stock_input):
     
     return unique_list
 
-def analyze_single_stock_for_batch(symbol, period, enabled_analysts_config=None, selected_model='deepseek-chat'):
+def analyze_single_stock_for_batch(symbol, period, enabled_analysts_config=None, selected_model='deepseek-reasoner'):
     """单个股票分析（用于批量分析）
     
     Args:

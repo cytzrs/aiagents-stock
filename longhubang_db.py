@@ -19,7 +19,7 @@ class LonghubangDatabase:
         Args:
             db_path: 数据库文件路径
         """
-        self.db_path = db_path
+        self.db_path ="./data/" +  db_path
         self.init_database()
     
     def get_connection(self):

@@ -62,10 +62,13 @@ def display_main_force_selector():
     with col1:
         date_option = st.selectbox(
             "选择时间区间",
-            ["最近3个月", "最近6个月", "最近1年", "自定义日期"]
+            ["最近1个月", "最近3个月", "最近6个月", "最近1年", "自定义日期"]
         )
-        
-        if date_option == "最近3个月":
+
+        if date_option == "最近1个月":
+            days_ago = 30
+            start_date = None
+        elif date_option == "最近3个月":
             days_ago = 90
             start_date = None
         elif date_option == "最近6个月":
@@ -86,7 +89,7 @@ def display_main_force_selector():
         final_n = st.slider(
             "最终精选数量",
             min_value=3,
-            max_value=10,
+            max_value=100,
             value=5,
             step=1,
             help="最终推荐的股票数量"
