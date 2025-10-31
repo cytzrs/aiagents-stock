@@ -161,7 +161,7 @@ class LhtBatchDatabase:
         cursor.execute('''
             SELECT id, analysis_date, batch_count, analysis_mode, 
                    success_count, failed_count, total_time, results_json, created_at
-            FROM batch_analysis_history
+            FROM batch_lht_analysis_history
             ORDER BY created_at DESC
             LIMIT ?
         ''', (limit,))
