@@ -14,3 +14,5 @@ TradEnv/
 
 *.db
 **/*.db
+
+./data/
