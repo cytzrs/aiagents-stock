@@ -20,7 +20,7 @@ class SectorStrategyDatabase:
         Args:
             db_path: 数据库文件路径
         """
-        self.db_path = db_path
+        self.db_path ="./data/" +  db_path
         # 初始化日志
         self.logger = logging.getLogger(__name__)
         if not self.logger.handlers:

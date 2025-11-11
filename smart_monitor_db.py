@@ -20,7 +20,8 @@ class SmartMonitorDB:
         Args:
             db_file: 数据库文件路径
         """
-        self.db_file = db_file
+        self.db_file ="./data/" +  db_file
+
         self.logger = logging.getLogger(__name__)
         self._init_database()
     
