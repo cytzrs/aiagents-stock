@@ -25,6 +25,6 @@ MINIQMT_CONFIG = {
 
 # TDX股票数据API配置项目地址github.com/oficcejo/tdx-api
 TDX_CONFIG = {
-    'enabled': os.getenv("TDX_ENABLED", "false").lower() == "true",
-    'base_url': os.getenv("TDX_BASE_URL", "http://192.168.1.222:8181"),
+    'enabled': os.getenv("TDX_ENABLED", "true").lower() == "true",
+    'base_url': os.getenv("TDX_BASE_URL", "http://127.0.0.1:8080"),
 }
