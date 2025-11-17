@@ -591,7 +591,7 @@ def run_lht_batch_analysis():
             'sentiment': False,  # 禁用以提升速度
             'news': False  # 禁用以提升速度
         }
-        selected_model = 'deepseek-chat'
+        selected_model = 'deepseek-reasoner'
         period = '1y'
         
         # 创建进度显示

@@ -956,7 +956,7 @@ def run_batch_analysis(stock_list, period, batch_mode="顺序分析"):
         'news': st.session_state.get('enable_news', False),
         'cgyj': st.session_state.get('enable_cgyj', False)
     }
-    selected_model = st.session_state.get('selected_model', 'deepseek-chat')
+    selected_model = st.session_state.get('selected_model', 'deepseek-reasoner')
 
     # 创建进度显示
     st.subheader(f"📊 批量分析进行中 ({batch_mode})")
@@ -1229,7 +1229,7 @@ def run_stock_analysis(symbol, period):
         # 6. 初始化AI分析系统
         status_text.text("🤖 正在初始化AI分析系统...")
         # 使用选择的模型
-        selected_model = st.session_state.get('selected_model', 'deepseek-chat')
+        selected_model = st.session_state.get('selected_model', 'deepseek-reasoner')
         agents = StockAnalysisAgents(model=selected_model)
         progress_bar.progress(55)
 

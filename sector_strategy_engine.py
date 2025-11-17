@@ -16,7 +16,7 @@ import logging
 class SectorStrategyEngine:
     """板块策略综合研判引擎"""
     
-    def __init__(self, model="deepseek-chat"):
+    def __init__(self, model="deepseek-reasoner"):
         self.model = model
         self.agents = SectorStrategyAgents(model=model)
         self.deepseek_client = DeepSeekClient(model=model)

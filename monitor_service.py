@@ -234,6 +234,15 @@ class StockMonitorService:
             # 检查MiniQMT是否连接
             if not miniqmt.is_connected():
                 print(f"MiniQMT未连接，无法执行 {stock['symbol']} 的量化交易")
+                print(f"模拟交易 {stock['symbol']} 的量化交易")
+                # 记录交易通知（量化交易通知不检查重复，因为每次交易都应该通知）
+                monitor_db.add_notification(
+                    stock['id'], 
+                    'quant_trade', 
+                    f"量化交易执行: {signal_type} signal triggered"
+                )
+                # 立即发送通知（包括邮件）
+                notification_service.send_notifications()
                 return
             
             # 获取量化配置

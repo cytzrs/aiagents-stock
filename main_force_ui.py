@@ -65,7 +65,10 @@ def display_main_force_selector():
             ["最近1个月", "最近3个月", "最近6个月", "最近1年", "自定义日期"]
         )
 
-        if date_option == "最近3个月":
+        if date_option == "最近1个月":
+            days_ago = 30
+            start_date = None
+        elif date_option == "最近3个月":
             days_ago = 90
             start_date = None
         elif date_option == "最近6个月":
@@ -613,7 +616,7 @@ def run_main_force_batch_analysis():
             'sentiment': False,  # 禁用以提升速度
             'news': False  # 禁用以提升速度
         }
-        selected_model = 'deepseek-chat'
+        selected_model = 'deepseek-reasoner'
         period = '1y'
 
         # 创建进度显示

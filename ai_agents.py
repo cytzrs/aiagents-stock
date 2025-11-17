@@ -5,7 +5,7 @@ import time
 class StockAnalysisAgents:
     """股票分析AI智能体集合"""
     
-    def __init__(self, model="deepseek-chat"):
+    def __init__(self, model="deepseek-reasoner"):
         self.model = model
         self.deepseek_client = DeepSeekClient(model=model)
         

@@ -11,7 +11,7 @@ import time
 class SectorStrategyAgents:
     """板块策略AI智能体集合"""
     
-    def __init__(self, model="deepseek-chat"):
+    def __init__(self, model="deepseek-reasoner"):
         self.model = model
         self.deepseek_client = DeepSeekClient(model=model)
         print(f"[智策] AI智能体系统初始化 (模型: {model})")

@@ -17,7 +17,7 @@ import json
 class MainForceAnalyzer:
     """主力选股分析器 - 批量整体分析"""
     
-    def __init__(self, model='deepseek-chat'):
+    def __init__(self, model='deepseek-reasoner'):
         self.selector = main_force_selector
         self.fetcher = StockDataFetcher()
         self.model = model

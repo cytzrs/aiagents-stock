@@ -138,7 +138,7 @@ class SmartMonitorDeepSeek:
                 'can_trade': False
             }
 
-    def chat_completion(self, messages: List[Dict], model: str = "deepseek-chat",
+    def chat_completion(self, messages: List[Dict], model: str = "deepseek-reasoner",
                        temperature: float = 0.7, max_tokens: int = 2000) -> Dict:
         """
         调用DeepSeek API

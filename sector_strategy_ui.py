@@ -261,7 +261,7 @@ def display_report_detail(report_id):
     st.info("当前版本仅提供报告摘要，详细页面已移除。")
 
 
-def run_sector_strategy_analysis(model="deepseek-chat"):
+def run_sector_strategy_analysis(model="deepseek-reasoner"):
     """运行智策分析"""
     
     # 进度显示
