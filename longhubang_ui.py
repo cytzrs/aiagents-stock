@@ -183,7 +183,7 @@ def display_analysis_tab():
             st.error(f"❌ 分析失败: {result.get('error', '未知错误')}")
 
 
-def run_longhubang_analysis(model="deepseek-chat", date=None, days=1):
+def run_longhubang_analysis(model="deepseek-reasoner", date=None, days=1):
     """运行龙虎榜分析"""
     
     # 进度显示

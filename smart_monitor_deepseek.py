@@ -495,6 +495,8 @@ KDJ:
             else:
                 json_str = ai_response
             
+
+            self.logger.info(f"AI决策原始输出: {json_str}")
             decision = json.loads(json_str)
             
             # 验证必需字段
