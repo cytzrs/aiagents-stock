@@ -307,7 +307,7 @@ def main():
 
             if st.button("💰 主力选股", width='stretch', key="nav_main_force", help="基于主力资金流向的选股策略"):
                 st.session_state.show_main_force = True
-                for key in ['show_history', 'show_monitor', 'show_config', 'show_sector_strategy',
+                for key in ['show_history', 'show_monitor', 'show_config', 'show_sector_strategy','show_lht'
                            'show_longhubang', 'show_portfolio', 'show_low_price_bull']:
                     if key in st.session_state:
                         del st.session_state[key]
@@ -330,6 +330,13 @@ def main():
                 st.session_state.show_profit_growth = True
                 for key in ['show_history', 'show_monitor', 'show_config', 'show_sector_strategy',
                            'show_longhubang', 'show_portfolio', 'show_main_force', 'show_low_price_bull', 'show_small_cap']:
+                    if key in st.session_state:
+                        del st.session_state[key]
+
+            if st.button("💰 龙回头", width='stretch', key="nav_lht", help="基于热门股回调的选股策略"):
+                st.session_state.show_lht = True
+                for key in ['show_history', 'show_monitor', 'show_config', 'show_sector_strategy', 
+                           'show_longhubang', 'show_portfolio']:
                     if key in st.session_state:
                         del st.session_state[key]
         
